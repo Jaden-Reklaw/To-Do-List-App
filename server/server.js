@@ -2,6 +2,9 @@
 import express from 'express';
 const app = express();
 
+//Import router module
+import router from './routes/router';
+
 //Good port to use
 const PORT = process.env.PORT || 5000;
 
@@ -16,3 +19,6 @@ app.use(express.json({limit: '1mb'}));
 app.listen( PORT, () => {
 	console.log( 'listening on port', PORT);
 });
+
+// ROUTES
+app.use('/tasks', router);

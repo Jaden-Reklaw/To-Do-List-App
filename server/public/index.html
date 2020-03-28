@@ -2,11 +2,47 @@
 <html>
 <head>
 	<title>SQL-to-do_list</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	
 </head>
 <body>
-	<h1>SQL-to-do-list</h1>
+	<header>
+		<h1>Personal To Do List</h1>
+	</header>
+
+	<!-- Create a form to get users tasks -->
+	<section id="input-section">
+		<form>
+			<label>Task Name:</label><input type="text" id="task-input" placeholder="Name of Task">
+			<label>Task Description:</label><input type="text" id="description-input" placeholder="Enter Task Description...">
+			<label>Location:</label><input type="text" id="location-input" placeholder="Enter Location">
+			<label>Date Due:</label><br><input type="date" id="date-input">
+			<button type="submit" id="add-task-btn">Add Task</button>
+		</form>
+	</section>
+
+	<!-- Create a table to Display to the DOM from the Database -->
+	<section id="table-section">
+		<table id="task-table">
+			<tr>
+				<th>Task</th>
+				<th>Description</th>
+				<th>Location</th>
+				<th>Date</th>
+				<th>Status</th>
+				<th>Remove Task</th>
+			</tr>
+			<tr class="highlight">
+				<td>Grocery</td>
+				<td>Buy food for the next two weeks</td>
+				<td>01/01/2020</td>
+				<td>Cub Foods</td>
+				<td>In Progress</td>
+				<td>X</td>
+			</tr>
+		</table>
+	</section>
+	
 
 	<!-- The webpage will load then the scripts will run -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

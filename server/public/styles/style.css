@@ -1,4 +1,101 @@
-/* Test connection to index.html */
-h1 {
-	color: blue;
+/*Default Styling */
+* {
+  box-sizing: border-box;
 }
+
+body {
+	font-family: "Comic Sans MS";
+	margin: 0 auto;
+}
+/* Header styling*/
+header {
+	text-align: center;
+	/*Midnight Blue*/
+	background: #191970;
+}
+
+h1 {
+	margin: 0px;
+	padding: 12px;
+	/*Ivory*/
+	color: #FFFFF0;
+	text-shadow: 3px 3px 5px black;
+}
+
+/* Form Styling */
+#input-section {
+	margin: 12px 12px;
+	border-radius: 5px;
+	background-color: #44449A;
+	padding: 20px;
+}
+
+/* For input type text fields*/
+input[type=text] {
+	font-size: 13px;
+	width: 100%;
+	padding: 12px;
+	border: 1px solid black;
+	border-radius: 4px;
+	font-family: "Comic Sans MS";
+}
+
+label {
+	color: #FFFFF0;
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+}
+
+/* For the submit button */
+button[type=submit] {
+	display: block;
+	margin-left: auto;
+	background-color: #040439;
+	color: #FFFFF0;
+	padding: 20px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-family: "Comic Sans MS";
+}
+
+button[type=submit]:hover {
+	background-color: #9191CF;
+}
+
+/* For the Date field */
+input[type=date] {
+	margin: 12px 0px;
+	padding: 12px;
+	border-radius: 4px;
+	border: none;
+	font-family: "Comic Sans MS";
+}
+
+/* Table Styling */
+#table-section {
+	margin: 12px 12px;
+	border-radius: 5px;
+	background-color: #F5F5F5;
+	padding: 20px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.highlight:hover {
+	background-color:#9191CF;
+}
+
+
+
+
+
+

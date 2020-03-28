@@ -24,22 +24,19 @@
 	<!-- Create a table to Display to the DOM from the Database -->
 	<section id="table-section">
 		<table id="task-table">
-			<tr>
-				<th>Task</th>
-				<th>Description</th>
-				<th>Location</th>
-				<th>Date</th>
-				<th>Status</th>
-				<th>Remove Task</th>
-			</tr>
-			<tr class="highlight">
-				<td>Grocery</td>
-				<td>Buy food for the next two weeks</td>
-				<td>01/01/2020</td>
-				<td>Cub Foods</td>
-				<td>In Progress</td>
-				<td><button class="delete">X</button></td>
-			</tr>
+			<thead>
+				<tr>
+					<th>Task</th>
+					<th>Description</th>
+					<th>Location</th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Remove Task</th>
+				</tr>
+			</thead>
+			<tbody id="tasks-output">
+			<!-- jQuery will fill this in -->
+			</tbody>
 		</table>
 	</section>
 	

@@ -3,7 +3,7 @@ import pg from 'pg';
 
 //Configures connection to database
 const config = {
-  database: 'task_database', 
+  database: 'tasks_database', 
   host: 'localhost', 
   port: 5432, 
   max: 10, 

@@ -3,7 +3,7 @@ import pg from 'pg';
 
 //Configures connection to database
 const config = {
-  database: 'tasks_database', 
+  database: 'weekend-to-do-app', 
   host: 'localhost', 
   port: 5432, 
   max: 10, 

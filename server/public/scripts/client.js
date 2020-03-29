@@ -15,6 +15,9 @@ function onReady() {
 	//Create Event Listener to delete a task by clicking the x
 	$('#tasks-output').on('click', '.delete', deleteTaskOnServer);
 	$('#tasks-output').on('click', '.status-field', updateTaskOnServer);
+
+	//Create Event Listner to edit individual content fields
+	$('#tasks-output').on('blur', `.task, .description, .location, .due_date`, changeContent);
 }
 
 //Get user inputs and store into an object to send to server
@@ -113,6 +116,39 @@ function updateTaskOnServer(event) {
 	});	
 }
 
+// Function to PUT information on the server on task, description, location, data_due
+function changeContent(event) {
+	//Get the id to change the on the database
+	console.log($(this).attr('data-id'));
+	let fieldId = $(this).attr('data-id');
+
+	//Get the text to edit to the database
+	console.log($(this).text());
+	let editText = $(this).text();
+
+	//Get the class in order to know what field to edit on the database
+	console.log($(this).attr('class'));
+	let selectedField = $(this).attr('class');
+
+	const options = {
+		method: 'PUT',
+		headers: {
+    		'Content-Type': 'application/json'
+  		},
+		body: JSON.stringify({newText: editText, field: selectedField})
+	};
+
+	//Using fetch api to send information to the server
+	fetch(`/tasks/newData/${fieldId}`, options).then(response => {
+		console.log('updating task to server',response);
+		//Get all task from server again after task is added
+		receiveTaskFromServer();
+	}).catch(error => {
+  		console.log('Error:', error);
+	});
+
+}
+
 
 //Funciton to render information from server to the DOM
 function renderToDOM(tasksArray) {
@@ -122,14 +158,14 @@ function renderToDOM(tasksArray) {
     // add each task to the DOM
     for( let task of tasksArray ){
         $('#tasks-output').append(`<tr class="highlight">`);
-        $('#tasks-output').append(`<td class="task-field">${task.task}</td>`);
-        $('#tasks-output').append(`<td class="description-field">${task.description}</td>`);
-        $('#tasks-output').append(`<td class="location-field">${task.location}</td>`);
-        $('#tasks-output').append(`<td class="date-field">${formatDate(task.due_date)}</td>`);
+        $('#tasks-output').append(`<td class="task" data-id="${task.id}" contenteditable>${task.task}</td>`);
+        $('#tasks-output').append(`<td class="description" data-id="${task.id}" contenteditable>${task.description}</td>`);
+        $('#tasks-output').append(`<td class="location" data-id="${task.id}" contenteditable>${task.location}</td>`);
+        $('#tasks-output').append(`<td class="due_date" data-id="${task.id}" contenteditable>${formatDate(task.due_date)}</td>`);
         if(task.status === 'complete'){
         	$('#tasks-output').append(`<td class="status-field complete" data-id="${task.id}">${task.status}</td>`);
         } else {
-        	$('#tasks-output').append(`<td class="status-field" data-id="${task.id}""><button>${task.status}</button></td>`);
+        	$('#tasks-output').append(`<td class="status-field" data-id="${task.id}"><button>${task.status}</button></td>`);
         }
         $('#tasks-output').append(`<td><button class="delete" data-id="${task.id}">X</button></td>`);
         $('#tasks-output').append(`</tr>`);

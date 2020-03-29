@@ -69,5 +69,29 @@ router.put('/:id',  (req, res) => {
   });
 });
 
+// PUT Response
+router.put('/newData/:id',  (req, res) => {
+  //field to edit on database
+  let field = req.body.field; 
+
+  //New information to edit on database
+  let task_update = req.body.newText; 
+
+  //Id of the information that is updated
+  let id = req.params.id; 
+
+  console.log(`Updating task ${id} with `, task_update);
+
+  
+  let sqlText = `UPDATE tasks SET ${field} = $1 
+                 WHERE id = $2;`;
+  pool.query(sqlText, [task_update, id]).then((result) => {
+    res.sendStatus(201);
+  }).catch((error) => {
+    console.log('Error updating task with PUT', error);
+    res.sendStatus(500);
+  });
+});
+
 //Export Module
 export default router;

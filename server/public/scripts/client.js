@@ -33,6 +33,13 @@ function addNewTask( event ) {
     sendTaskToServer(newTask);
 }
 
+function clearInputs() {
+	$('#task-input').val('');
+	$('#description-input').val('');
+    $('#location-input').val('');
+    $('#date-input').val('');
+}
+
 //Function to GET information from the server
 function receiveTaskFromServer() {
 	fetch('/tasks').then((response) => {
@@ -61,6 +68,7 @@ function sendTaskToServer(task) {
 	fetch('/tasks', options).then(response => {
 		console.log('sending task to server',response);
 		//Get all task from server again after task is added
+		clearInputs();
 		receiveTaskFromServer();
 	}).catch(error => {
   		console.log('Error:', error);

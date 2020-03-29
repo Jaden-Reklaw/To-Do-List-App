@@ -84,6 +84,11 @@ table {
   width: 100%;
 }
 
+thead {
+	background-color: #191970;
+	color: white;
+}
+
 th, td {
   padding: 8px;
   text-align: left;

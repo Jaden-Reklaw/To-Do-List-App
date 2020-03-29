@@ -37,6 +37,19 @@ router.post( '/', ( req, res )=>{
 });
 
 // DELETE Response
+router.delete('/:id',  (req, res) => {
+  let id = req.params.id; // id of the thing to delete
+  console.log('Delete route called with id of', id);
+
+  // TODO - REPLACE BELOW WITH YOUR CODE
+  let sqlText = `DELETE FROM tasks WHERE id = $1;`
+  pool.query(sqlText, [id]).then((result) => {
+    res.sendStatus(200);
+  }).catch((error) => {
+    console.log('Error in Delete by id', error);
+    res.sendStatus(500);
+  });
+});
 
 // PUT Response
 

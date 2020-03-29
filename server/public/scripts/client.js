@@ -11,6 +11,9 @@ function onReady() {
 
 	//Create Event Listener to receive a click event
 	$('#add-task-btn').on('click', addNewTask);
+
+	//Create Event Listener to delete a task by clicking the x
+	$('#tasks-output').on('click', '.delete', deleteTaskFromServer);
 }
 
 //Get user inputs and store into an object to send to server
@@ -42,7 +45,7 @@ function receiveTaskFromServer() {
 	});
 }
 
-//Function to POST information to the server
+//Function to POST information to the server database
 function sendTaskToServer(task) {
 	//Send task to server with POST method
 	const options = {
@@ -63,6 +66,22 @@ function sendTaskToServer(task) {
 	});
 }
 
+//Function to DELETE information on the server database
+function deleteTaskFromServer(event) {
+	console.log('deleteTaskFromServer');
+	let taskId = $(this).attr('data-id');
+	console.log('id is:', taskId);
+
+	//Send task to server with POST method
+	fetch(`/tasks/${taskId}`, {method: 'DELETE'}).then((response) => {
+		console.log('deleting task from server',response);
+		receiveTaskFromServer();
+	}).catch((error) => {
+		console.log('Error:', error);
+	});
+}
+
+
 //Funciton to render information from server to the DOM
 function renderToDOM(tasksArray) {
     // empty output element (table body)
@@ -71,13 +90,13 @@ function renderToDOM(tasksArray) {
     // add each song to the DOM
     for( let task of tasksArray ){
         $('#tasks-output').append( `
-                <tr>
+                <tr class="highlight">
                     <td>${task.task}</td>
                     <td>${task.description}</td>
                     <td>${task.location}</td>
                     <td>${formatDate(task.due_date)}</td>
                     <td>${task.status}</td>
-                    <td><button class="delete">X</button></td>
+                    <td><button class="delete" data-id="${task.id}">X</button></td>
                 </tr>` 
         );
     } 

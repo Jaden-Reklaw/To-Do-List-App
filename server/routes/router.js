@@ -41,8 +41,8 @@ router.delete('/:id',  (req, res) => {
   let id = req.params.id; // id of the thing to delete
   console.log('Delete route called with id of', id);
 
-  // TODO - REPLACE BELOW WITH YOUR CODE
-  let sqlText = `DELETE FROM tasks WHERE id = $1;`
+  //SQL text to DELETE item from Database
+  let sqlText = `DELETE FROM tasks WHERE id = $1;`;
   pool.query(sqlText, [id]).then((result) => {
     res.sendStatus(200);
   }).catch((error) => {
@@ -52,6 +52,22 @@ router.delete('/:id',  (req, res) => {
 });
 
 // PUT Response
+router.put('/:id',  (req, res) => {
+  let task_update = req.body; 
+  let id = req.params.id; 
+
+  console.log(`Updating task ${id} with `, task_update);
+
+  
+  let sqlText = `UPDATE tasks SET status = $1 
+                 WHERE id = $2;`;
+  pool.query(sqlText, [task_update.status, id]).then((result) => {
+    res.sendStatus(201);
+  }).catch((error) => {
+    console.log('Error updating task with PUT', error);
+    res.sendStatus(500);
+  });
+});
 
 //Export Module
 export default router;

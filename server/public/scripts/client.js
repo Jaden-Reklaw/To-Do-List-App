@@ -8,9 +8,28 @@ function onReady() {
 	console.log('jquery working');
 	//Get tasks from the server
 	receiveTaskFromServer();
+
+	//Create Event Listener to receive a click event
+	$('#add-task-btn').on('click', addNewTask);
 }
 
-//Function to get information from the server
+//Get user inputs and store into an object to send to server
+function addNewTask( event ) {
+    console.log('addNewTask');
+    event.preventDefault();
+    // get user input & put into an object
+    let newTask = {
+        task: $('#task-input').val(),
+        description: $('#description-input').val(),
+        location: $('#location-input').val(),
+        date: $('#date-input').val()
+    }
+
+    console.log('newTask is', newTask);
+    sendTaskToServer(newTask);
+}
+
+//Function to GET information from the server
 function receiveTaskFromServer() {
 	fetch('/tasks').then((response) => {
 		return response.json();
@@ -23,10 +42,31 @@ function receiveTaskFromServer() {
 	});
 }
 
+//Function to POST information to the server
+function sendTaskToServer(task) {
+	//Send task to server with POST method
+	const options = {
+		method: 'POST',
+		headers: {
+    		'Content-Type': 'application/json'
+  		},
+		body: JSON.stringify(task)
+	};
+
+	//Using fetch api to send information to the server
+	fetch('/tasks', options).then(response => {
+		console.log('sending task to server',response);
+		//Get all task from server again after task is added
+		receiveTaskFromServer();
+	}).catch(error => {
+  		console.log('Error:', error);
+	});
+}
+
 //Funciton to render information from server to the DOM
 function renderToDOM(tasksArray) {
     // empty output element (table body)
-    $( '#books-output' ).empty(); 
+    $( '#tasks-output' ).empty(); 
 
     // add each song to the DOM
     for( let task of tasksArray ){
@@ -39,12 +79,12 @@ function renderToDOM(tasksArray) {
                     <td>${task.status}</td>
                     <td><button class="delete">X</button></td>
                 </tr>` 
-            );
+        );
     } 
 }
 
 //Function for formating Date
-function formatDate( dateString ) {
+function formatDate(dateString) {
     let date = new Date(dateString);
     return date.toLocaleDateString();
 }

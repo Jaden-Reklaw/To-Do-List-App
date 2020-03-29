@@ -20,6 +20,21 @@ router.get( '/', ( req, res )=>{
 });
 
 //POST Response
+router.post( '/', ( req, res )=>{
+  console.log( 'POST task:', req.body );
+  let data = req.body;
+
+//SQL parameter to fill in the values - $1, $2, etc...
+  let sqlText = `INSERT INTO tasks (task, description, location, due_date)
+  				 VALUES($1, $2, $3, $4);`;
+  //The 
+  pool.query(sqlText, [data.task, data.description, data.location, data.due_date]).then((result) => {
+  	res.sendStatus(200);
+  }).catch((error) => {
+  	console.log('Error', error);
+  	res.sendStatus(500);
+  });
+});
 
 // DELETE Response
 

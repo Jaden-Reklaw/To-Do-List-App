@@ -1,6 +1,9 @@
 //Test Connection
 console.log('Connection Established to client.js!');
 
+//Global Variable
+let originText = '';
+
 //Preparing DOM for jquery
 $(document).ready(onReady);
 
@@ -17,6 +20,7 @@ function onReady() {
 	$('#tasks-output').on('click', '.status-field', updateTaskOnServer);
 
 	//Create Event Listner to edit individual content fields
+	$('#tasks-output').on('click', `.task, .description, .location, .due_date`, orignalContent);
 	$('#tasks-output').on('blur', `.task, .description, .location, .due_date`, changeContent);
 }
 
@@ -130,23 +134,32 @@ function changeContent(event) {
 	console.log($(this).attr('class'));
 	let selectedField = $(this).attr('class');
 
-	const options = {
-		method: 'PUT',
-		headers: {
-    		'Content-Type': 'application/json'
-  		},
-		body: JSON.stringify({newText: editText, field: selectedField})
-	};
+	if(editText !== originText) {
+		const options = {
+			method: 'PUT',
+			headers: {
+	    		'Content-Type': 'application/json'
+	  		},
+			body: JSON.stringify({newText: editText, field: selectedField})
+		};
 
-	//Using fetch api to send information to the server
-	fetch(`/tasks/newData/${fieldId}`, options).then(response => {
-		console.log('updating task to server',response);
-		//Get all task from server again after task is added
-		receiveTaskFromServer();
-	}).catch(error => {
-  		console.log('Error:', error);
-	});
+		//Using fetch api to send information to the server
+		fetch(`/tasks/newData/${fieldId}`, options).then(response => {
+			console.log('updating task to server',response);
+			//Get all task from server again after task is added
+			receiveTaskFromServer();
+		}).catch(error => {
+	  		console.log('Error:', error);
+		});
+	} else {
+		console.log('no change');
+	}
 
+}
+
+//function to get the original text from a field to check if it has been modified
+function orignalContent(event) {
+	originText = $(this).text();
 }
 
 

@@ -22,6 +22,9 @@ function onReady() {
 	//Create Event Listner to edit individual content fields
 	$('#tasks-output').on('click', `.task, .description, .location, .due_date`, orignalContent);
 	$('#tasks-output').on('blur', `.task, .description, .location, .due_date`, changeContent);
+
+	//Select edit button to make fields with a specific Id editable
+	$('#tasks-output').on('click', `.edit`, editMode);
 }
 
 //Get user inputs and store into an object to send to server
@@ -111,7 +114,30 @@ function updateTaskOnServer(event) {
 	};
 
 	//Using fetch api to send information to the server
-	fetch(`/tasks/${taskId}`, options).then(response => {
+	fetch(`/tasks/status/${taskId}`, options).then(response => {
+		console.log('updating task to server',response);
+		//Get all task from server again after task is added
+		receiveTaskFromServer();
+	}).catch(error => {
+  		console.log('Error:', error);
+	});	
+}
+
+//Function to update status into editMode
+function editMode(event) {
+	console.log('editMode');
+	let taskId = $(this).attr('data-id');
+
+	const options = {
+		method: 'PUT',
+		headers: {
+    		'Content-Type': 'application/json'
+  		},
+		body: JSON.stringify({edit: 'TRUE'})
+	};
+
+	//Using fetch api to send information to the server
+	fetch(`/tasks/edit/${taskId}`, options).then(response => {
 		console.log('updating task to server',response);
 		//Get all task from server again after task is added
 		receiveTaskFromServer();
@@ -162,7 +188,6 @@ function orignalContent(event) {
 	originText = $(this).text();
 }
 
-
 //Funciton to render information from server to the DOM
 function renderToDOM(tasksArray) {
     // empty output element (table body)
@@ -171,10 +196,11 @@ function renderToDOM(tasksArray) {
     // add each task to the DOM
     for( let task of tasksArray ){
         $('#tasks-output').append(`<tr class="highlight">`);
-        $('#tasks-output').append(`<td class="task" data-id="${task.id}" contenteditable>${task.task}</td>`);
-        $('#tasks-output').append(`<td class="description" data-id="${task.id}" contenteditable>${task.description}</td>`);
-        $('#tasks-output').append(`<td class="location" data-id="${task.id}" contenteditable>${task.location}</td>`);
-        $('#tasks-output').append(`<td class="due_date" data-id="${task.id}" contenteditable>${formatDate(task.due_date)}</td>`);
+        $('#tasks-output').append(`<td><button class="edit" data-id="${task.id}">Edit</button><button>Update</button></td>`)
+        $('#tasks-output').append(`<td class="task" data-id="${task.id}" contenteditable="false">${task.task}</td>`);
+        $('#tasks-output').append(`<td class="description" data-id="${task.id}" contenteditable="false">${task.description}</td>`);
+        $('#tasks-output').append(`<td class="location" data-id="${task.id}" contenteditable="false">${task.location}</td>`);
+        $('#tasks-output').append(`<td class="due_date" data-id="${task.id}" contenteditable"false">${formatDate(task.due_date)}</td>`);
         if(task.status === 'complete'){
         	$('#tasks-output').append(`<td class="status-field complete" data-id="${task.id}">${task.status}</td>`);
         } else {

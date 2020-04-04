@@ -53,7 +53,7 @@ router.delete('/:id',  (req, res) => {
 });
 
 // PUT Response
-router.put('/:id',  (req, res) => {
+router.put('/status/:id',  (req, res) => {
   let task_update = req.body; 
   let id = req.params.id; 
 
@@ -70,7 +70,25 @@ router.put('/:id',  (req, res) => {
   });
 });
 
-// PUT Response
+//PUT Response Updating the edit button
+router.put('/edit/:id',  (req, res) => {
+  let task_update = req.body; 
+  let id = req.params.id; 
+
+  console.log(`Updating task ${id} with `, task_update);
+
+  
+  let sqlText = `UPDATE tasks SET edit = $1 
+                 WHERE id = $2;`;
+  pool.query(sqlText, [task_update.edit, id]).then((result) => {
+    res.sendStatus(201);
+  }).catch((error) => {
+    console.log('Error updating task with PUT', error);
+    res.sendStatus(500);
+  });
+});
+
+// PUT Response updating datafields task, description, location, due_date
 router.put('/newData/:id',  (req, res) => {
   //field to edit on database
   let field = req.body.field; 

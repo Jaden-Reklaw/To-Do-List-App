@@ -31,9 +31,9 @@ Task Name(name of task), Task Description(brief summary of task), Location(place
 
 2. Edit and Update currently not working. Orignially I had a each field set to contenteditable which allow a user to edit all fields when ever with out having to click update and the list would be change with the new content.
 
-3.) Once a user is finished with a task they can simply click on scheduled button in order to show a green completed text to show they are done with a task.
+3. Once a user is finished with a task they can simply click on scheduled button in order to show a green completed text to show they are done with a task.
 
-4.) If a user creates a task they don't want anymore or by accident they can simply click the x button that will remove the task from the list.
+4. If a user creates a task they don't want anymore or by accident they can simply click the x button that will remove the task from the list.
 
 ## Built With
 - HTML

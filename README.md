@@ -12,9 +12,9 @@ To see the fully functional website, please visit: [DEPLOYED VERSION OF APP](htt
 
 ## Screen Shot
 Example Base Mode Server Side Calculator
-![ Home_Page ](https://github.com/Jaden-Reklaw/jquery-server-side-calculator/blob/master/Wireframes/BM-Server-Side-Cal.png "Example Base Mode Server Side Calculator")
+![ Home_Page | FORM](https://github.com/Jaden-Reklaw/To-Do-List-App/blob/master/img/TODO_LIST_FORM.png "Example of the form to create a task")
 Example Stretch Mode Server Side Calculator
-![ Stretch_Mode_Page ](https://github.com/Jaden-Reklaw/jquery-server-side-calculator/blob/master/Wireframes/SM-Server-Side-Cal.png "Example Stretch Mode Server Side Calculator")
+![ HOME_PAGE | LIST ](https://github.com/Jaden-Reklaw/To-Do-List-App/blob/master/img/LIST_OF_TASKS.png "Example of the list that holds all the tasks")
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/en/)
